@@ -1,0 +1,11 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: seldon-operator
+  namespace: kube-system
+spec:
+  chart:
+    repository: https://storage.googleapis.com/seldon-charts
+    name: seldon-core-operator
+    version: 1.7.0
+  releaseName: seldon-operator
