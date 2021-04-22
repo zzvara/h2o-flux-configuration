@@ -56,6 +56,11 @@ Make sure to reconfigure the job itself, for this, see
 `h2o-stube-spark-configuration.yaml`. (Especially access keys,
 your configured Elasticsearch access, and so on.)
 
+## Services not required
+
+- Attached Seldon operator that will help us to facilitate ML inference
+  quickly to accompany the Spark jobs.
+
 ## Troubleshooting
 
 - Refer to corresponding service troubleshooting for more information
