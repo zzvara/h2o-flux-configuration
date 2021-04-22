@@ -55,3 +55,9 @@ The latest application Docker image is already publish into Docker Hub.
 Make sure to reconfigure the job itself, for this, see
 `h2o-stube-spark-configuration.yaml`. (Especially access keys,
 your configured Elasticsearch access, and so on.)
+
+## Troubleshooting
+
+- Refer to corresponding service troubleshooting for more information
+  on how to set up and fix that service. For example, follow OpenVPN Git
+  or repository URL you find in `openvpn.yaml`.
