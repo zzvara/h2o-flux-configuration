@@ -1,0 +1,17 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: h2o.sztaki.dev
+  namespace: experimental
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`h2o.sztaki.dev`)
+      services:
+        - name: h2o-kibana-kb-http
+          port: 5601
+          scheme: http
+  tls:
+    certResolver: tls

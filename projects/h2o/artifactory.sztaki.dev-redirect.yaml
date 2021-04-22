@@ -1,0 +1,18 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: artifactory.sztaki.dev-redirect
+  namespace: experimental
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`artifactory.sztaki.dev`)
+      middlewares:
+          - name: redirect-on-kube-system
+            namespace: kube-system
+      services:
+        - name: h2o-artifactory-artifactory
+          port: 8082
+          scheme: http

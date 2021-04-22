@@ -1,0 +1,37 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: h2o-elasticsearch
+  namespace: experimental
+spec:
+  version: 7.11.1
+  nodeSets:
+    - config:
+        node.data: true
+        node.ingest: true
+        node.master: true
+      count: 3
+      name: default
+      podTemplate:
+        metadata:
+          spec:
+            containers:
+              - env:
+                  - name: ES_JAVA_OPTS
+                    value: -Xms4g -Xmx4g
+                name: elasticsearch
+                resources:
+                  limits:
+                    memory: 10Gi
+                  requests:
+                    memory: 10Gi
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 10Gi
+            storageClassName: local

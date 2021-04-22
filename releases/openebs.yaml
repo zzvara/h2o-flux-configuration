@@ -1,0 +1,24 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: openebs
+  namespace: kube-system
+spec:
+  chart:
+    repository: https://openebs.github.io/charts
+    name: openebs
+    version: 2.6.0
+  releaseName: openebs
+  values:
+    localprovisioner:
+      basePath: /var/openebs/local
+    snapshotOperator:
+      enabled: true
+    ndm:
+      enabled: true
+    ndmOperator:
+      enabled: true
+    analytics:
+      enabled: true
+    crd:
+      enableInstall: true

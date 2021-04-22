@@ -1,0 +1,11 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: elastic-operator
+  namespace: kube-system
+spec:
+  chart:
+    repository: https://helm.elastic.co
+    name: eck-operator
+    version: 1.4.0
+  releaseName: elastic-operator

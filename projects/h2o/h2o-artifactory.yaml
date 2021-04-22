@@ -1,0 +1,27 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: h2o-artifactory
+  namespace: experimental
+spec:
+  chart:
+    repository: https://charts.jfrog.io/
+    name: artifactory-oss
+    version: 3.5.0
+  releaseName: h2o-artifactory
+  values:
+    artifactory:
+      artifactory:
+        javaOpts:
+          xms: "1g"
+          xmx: "1g"
+        persistence:
+          size: 5Gi
+          storageClassName: local
+      nginx:
+        enabled: false
+      postgresql:
+        enabled: false
+    postgresql:
+      enabled: false

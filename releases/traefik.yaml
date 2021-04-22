@@ -1,0 +1,57 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  chart:
+    repository: https://helm.traefik.io/traefik
+    name: traefik
+    version: 9.12.3
+  releaseName: traefik
+  values:
+    deployment:
+      kind: Deployment
+    experimental:
+      kubernetesGateway:
+        enabled: false
+    ingressRoute:
+      dashboard:
+        enabled: false
+    persistence:
+      enabled: false
+      accessMode: ReadWriteOnce
+      size: 100Mi
+      storageClass: "ceph-replicated"
+      path: /data
+      annotations: {}
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 0
+    additionalArguments:
+      - "--log.level=INFO"
+      - "--certificatesresolvers.tls.acme.tlschallenge=true"
+      - "--certificatesresolvers.tls.acme.email=zoltan.zvara@ilab.sztaki.hu"
+      - "--certificatesresolvers.tls.acme.storage=/data/tls.json"
+      - "--providers.kubernetescrd.throttleduration=15"
+      - "--accesslog=true"
+      - "--serversTransport.insecureSkipVerify=true"
+    ports:
+      traefik:
+        expose: true
+      web:
+        port: 8000
+        nodePort: 30080
+      websecure:
+        port: 8443
+        nodePort: 30443
+    hostNetwork: true
+    service:
+      type: NodePort
+    resources:
+      requests:
+        cpu: "1000m"
+        memory: "200Mi"
+      limits:
+        cpu: "2000m"
+        memory: "400Mi"

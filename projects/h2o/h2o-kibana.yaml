@@ -1,0 +1,23 @@
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: h2o-kibana
+  namespace: experimental
+spec:
+  config:
+    elasticsearch.ssl.verificationMode: none
+    xpack.monitoring.ui.container.elasticsearch.enabled: true
+    xpack.security.enabled: true
+    elasticsearch.requestTimeout: 100000
+    elasticsearch.shardTimeout: 100000
+    server.socketTimeout: 120000
+  count: 1
+  elasticsearchRef:
+    name: h2o-elasticsearch
+  version: 7.11.1
+  http:
+    service:
+      spec: {}
+    tls:
+      selfSignedCertificate:
+        disabled: true

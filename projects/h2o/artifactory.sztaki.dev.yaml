@@ -1,0 +1,17 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: artifactory.sztaki.dev
+  namespace: experimental
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`artifactory.sztaki.dev`)
+      services:
+        - name: h2o-artifactory-artifactory
+          port: 8082
+          scheme: http
+  tls:
+    certResolver: tls

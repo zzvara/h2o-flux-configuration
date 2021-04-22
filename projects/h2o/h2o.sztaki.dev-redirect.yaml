@@ -1,0 +1,18 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: h2o.sztaki.dev-redirect
+  namespace: experimental
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`h2o.sztaki.dev`)
+      middlewares:
+          - name: redirect-on-kube-system
+            namespace: kube-system
+      services:
+        - name: h2o-kibana-kb-http
+          port: 5601
+          scheme: http

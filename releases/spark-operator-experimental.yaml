@@ -1,0 +1,24 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: spark-operator-experimental
+  namespace: experimental
+spec:
+  chart:
+    repository: https://googlecloudplatform.github.io/spark-on-k8s-operator
+    name: spark-operator
+    version: 1.0.8
+  releaseName: spark-operator-experimental
+  values:
+    image:
+      tag: latest
+    webhook:
+      enable: true
+      namespaceSelector: "name=experimental"
+    sparkJobNamespace: experimental
+    resyncInterval: 30
+    metrics:
+      enable: false
+    controllerThreads: 1
+    batchScheduler:
+      enable: true

@@ -1,0 +1,31 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: openvpn
+  namespace: kube-system
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  chart:
+    git: https://github.com/helm/charts.git
+    path: stable/openvpn
+    ref: master
+  releaseName: openvpn
+  values:
+    service:
+      type: NodePort
+      externalPort: 32100
+      internalPort: 32100
+      hostPort: 32100
+      nodePort: 32100
+    ipForwardInitContainer: true
+    persistence:
+      enabled: true
+      storageClass: "local"
+      size: 10Mi
+    openvpn:
+      OVPN_K8S_POD_NETWORK: "10.233.64.0"
+      OVPN_K8S_POD_SUBNET: "255.255.192.0"
+      OVPN_K8S_SVC_NETWORK: "10.233.0.0"
+      OVPN_K8S_SVC_SUBNET: "255.255.192.0"
+      useCrl: true

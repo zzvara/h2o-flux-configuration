@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: hadoop
+  namespace: experimental
+  annotations:
+    fluxcd.io/automated: "true"
+spec:
+  chart:
+    git: https://github.com/helm/charts.git
+    path: stable/hadoop
+    ref: master
+  releaseName: hadoop
+  values:
+    hdfs:
+      dataNode:
+        replicas: 1
