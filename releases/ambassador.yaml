@@ -1,0 +1,27 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ambassador
+  namespace: kube-system
+spec:
+  chart:
+    repository: https://getambassador.io
+    name: ambassador
+    version: 6.6.2
+  releaseName: ambassador
+  values:
+    agent:
+      enabled: false
+    rateLimit:
+      create: false
+    redis:
+      create: false
+    enableAES: false
+    createDevPortalMappings: false
+    replicaCount: 1
+    test:
+      enabled: false
+    adminService:
+      create: false
+    service:
+      type: ClusterIP
