@@ -25,6 +25,11 @@ and are direct dependencies of the H2O project. Your Kubernetes cluster
 may have some of these already installed. Here, exemplary configuration
 parameters are provided for these services.
 
+- Added Docker registry in order to avoid "rate limiting" from Docker Hub during testing
+or installation. In addition to the Docker registry, one must update the Docker runtime
+  to use the provided registry as a mirror as follows on each machine
+  `--registry-mirror=http://localhost:30000`.
+
 ### `projects/h2o/`
 
 The project itself. Components:

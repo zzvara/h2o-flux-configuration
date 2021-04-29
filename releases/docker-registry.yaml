@@ -1,0 +1,24 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: docker-registry
+  namespace: kube-system
+spec:
+  forceUpgrade: true
+  chart:
+    repository: https://helm.twun.io
+    name: docker-registry
+    version: 1.10.1
+  releaseName: docker-registry
+  values:
+    service:
+      type: NodePort
+      nodePort: 30000
+    persistence:
+      enabled: true
+      storageClass: local
+      size: 200Gi
+    configData:
+      proxy:
+        remoteurl: https://registry-1.docker.io
