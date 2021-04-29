@@ -29,6 +29,9 @@ parameters are provided for these services.
 or installation. In addition to the Docker registry, one must update the Docker runtime
   to use the provided registry as a mirror as follows on each machine
   `--registry-mirror=http://localhost:30000`.
+- Added example Kubernetes Dashboard installation.
+- Finally, solved the Traefik routing problem on Calico network with exposed 443/80 ports.
+
 
 ### `projects/h2o/`
 
