@@ -1,0 +1,32 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: kubernetes-dashboard
+  namespace: kube-system
+spec:
+  chart:
+    repository: https://kubernetes.github.io/dashboard/
+    name: kubernetes-dashboard
+    version: 4.0.2
+  releaseName: kubernetes-dashboard
+  values:
+    protocolHttp: true
+    metricsScraper:
+      enabled: true
+    metrics-server:
+      enabled: true
+      hostNetwork:
+        enabled: true
+      rbac:
+        pspEnabled: true
+      args:
+        - '--kubelet-insecure-tls=true'
+        - '--kubelet-preferred-address-types=InternalIP,Hostname,ExternalIP'
+    service:
+      externalPort: 9090
+    extraArgs:
+      - '--enable-insecure-login'
+      - '--namespace=kube-system'
+      - '--token-ttl=0'
+      - '--insecure-bind-address=0.0.0.0'
+      - '--insecure-port=9090'
