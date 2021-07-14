@@ -1,0 +1,61 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: hdfs
+  namespace: kube-system
+  annotations:
+    fluxcd.io/automated: "true"
+    filter.fluxcd.io/backend: glob:*
+    filter.fluxcd.io/landing: glob:*
+spec:
+  releaseName: hdfs
+  chart:
+    repository: https://gchq.github.io/gaffer-docker
+    name: hdfs
+    version: 0.12.0
+  values:
+    config:
+      path: /etc/hadoop/conf
+      coreSite: { }
+      hdfsSite:
+        dfs.replication: 1
+        dfs.permissions: false
+        hadoop.security.authorization: false
+        dfs.namenode.datanode.registration.ip-hostname-check: false
+      rackAwareness:
+        serviceAccountName:
+        nodeTopologyLabel: topology.kubernetes.io/zone
+    shell:
+      enabled: false
+    namenode:
+      resources:
+        limits:
+          cpu: 500m
+          memory: 2000Mi
+        requests:
+          cpu: 100m
+          memory: 1500Mi
+      dataVolumes:
+        pvcTemplateSpec:
+          storageClassName: local
+          resources:
+            requests:
+              storage: 10Gi
+    datanode:
+      ingress:
+        enabled: false
+      resources:
+        limits:
+          cpu: 500m
+          memory: 2000Mi
+        requests:
+          cpu: 100m
+          memory: 1500Mi
+      nodeCount: 1
+      dataVolumes:
+        pvcTemplateSpec:
+          storageClassName: local
+          resources:
+            requests:
+              storage: 50Gi

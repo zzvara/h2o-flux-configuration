@@ -11,7 +11,7 @@ data:
     <configuration>
       <property>
           <name>fs.defaultFS</name>
-          <value>hdfs://hadoop-hadoop-hdfs-nn.experimental.svc.cluster.local:9000</value>
+          <value>hdfs://hdfs-namenodes.experimental.svc.cluster.local:8020</value>
       </property>
     </configuration>
 
