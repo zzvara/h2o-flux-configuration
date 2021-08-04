@@ -1,0 +1,31 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: container-registry
+  namespace: kube-system
+spec:
+  forceUpgrade: true
+  chart:
+    repository: https://charts.jfrog.io
+    name: artifactory-jcr
+    version: 3.4.0
+  releaseName: container-registry
+  values:
+    artifactory:
+      artifactory:
+        migration:
+          enabled: true
+          timeoutSeconds: 3600
+        javaOpts:
+          xms: "2g"
+          xmx: "2g"
+        persistence:
+          size: 50Gi
+          storageClassName: "local"
+      nginx:
+        enabled: false
+      postgresql:
+        enabled: false
+    postgresql:
+      enabled: false

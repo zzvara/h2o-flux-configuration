@@ -1,0 +1,27 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: strimzi
+  namespace: kube-system
+spec:
+  chart:
+    repository: https://strimzi.io/charts/
+    name: strimzi-kafka-operator
+    version: 0.21.1
+  releaseName: strimzi
+  forceUpgrade: true
+  values:
+    watchNamespaces:
+      - development
+      - production
+      - staging
+      - experimental
+    kubernetesServiceDnsDomain: cluster.local
+    resources:
+      requests:
+        cpu: 50m
+        memory: 300Mi
+      limits:
+        cpu: 200m
+        memory: 400Mi
