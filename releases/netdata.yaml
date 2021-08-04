@@ -1,0 +1,47 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: netdata
+  namespace: kube-system
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  chart:
+    repository: https://netdata.github.io/helmchart/
+    name: netdata
+    version: 3.6.10
+  releaseName: netdata
+  values:
+    ingress:
+      enabled: false
+    child:
+      resources:
+        requests:
+          memory: 600Mi
+          cpu: 200m
+        limits:
+          memory: 700Mi
+          cpu: 200m
+    parent:
+      resources:
+        requests:
+          memory: 1500Mi
+          cpu: 200m
+        limits:
+          memory: 1500Mi
+          cpu: 200m
+      database:
+        storageclass: local
+      alarms:
+        storageclass: local
+      configs:
+        stream:
+          data: |
+            [11111111-2222-3333-4444-555555555555]
+              enabled = yes
+              history = 36000
+              default memory mode = save
+              health enabled by default = auto
+              allow from = *
+        health:
+          data: |
