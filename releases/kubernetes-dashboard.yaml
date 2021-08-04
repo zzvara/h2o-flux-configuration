@@ -7,7 +7,7 @@ spec:
   chart:
     repository: https://kubernetes.github.io/dashboard/
     name: kubernetes-dashboard
-    version: 4.0.2
+    version: 4.3.1
   releaseName: kubernetes-dashboard
   values:
     protocolHttp: true
